@@ -1,4 +1,3 @@
-import pandas as pd
 from sklearn.naive_bayes import GaussianNB
 from hardcode import HardCodedClassifier
 from sklearn import datasets
@@ -34,3 +33,4 @@ if __name__ == "__main__":
     main()
 
     #test edit
+ 
