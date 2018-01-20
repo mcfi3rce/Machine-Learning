@@ -5,17 +5,27 @@ from knn import KNeighborsClassifier
 from sklearn import preprocessing
 
 def main():
-    build_dataset()
+    print "Which data set would you like to load: \n"
+    print "0: Iris\n 1: Digits\n "
+    data = raw_input()
+    print "What would you like your k to be?: "
+    k = raw_input()
 
-def build_dataset():
+    build_dataset(data, k)
+
+def build_dataset(dataset = 0, k = 3):
     #load the iris data set
-    iris = datasets.load_iris()
+
+    if dataset == "0":
+        dataset = datasets.load_iris()
+    elif dataset == "1":
+        dataset = datasets.load_digits()
 
     #returns a numpy array for each variable, this will allow us to use the variables to test our algorithm
-    data_train, data_test, targets_train, test_target = train_test_split(iris.data, iris.target, test_size = .3)
+    data_train, data_test, targets_train, test_target = train_test_split(dataset.data, dataset.target, test_size = .3)
 
     #Select the kNearest Neighbors
-    classifier = KNeighborsClassifier(3)
+    classifier = KNeighborsClassifier(int(k))
     model = classifier.fit(data_train, targets_train)
 
     targets_predicted = model.predict(data_test)
@@ -31,5 +41,3 @@ def build_dataset():
 
 if __name__ == "__main__":
     main()
-
-    #test edit
