@@ -19,9 +19,7 @@ class KNeighborsModel(object):
         return self.knn(self.k, self.data, self.targets, data_test)
 
     def knn(self, k, data, targets, data_test):
-        #training data
-        #training target
-        #k 
+
         nInputs = np.shape(data_test)[0]
         closest = np.zeros(nInputs)
 
