@@ -3,7 +3,7 @@ import numpy as np
 class KNeighborsClassifier():
 
     def __init__(self, k=3):
-        self.k = k
+        self.k = 
 
     def fit(self, data, targets):
         return KNeighborsModel(self.k, data, targets)

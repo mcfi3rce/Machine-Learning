@@ -20,7 +20,7 @@ def build_dataset(dataset = 0, k = 3):
         dataset = datasets.load_iris()
     elif dataset == "1":
         dataset = datasets.load_digits()
-
+    print type(dataset.data)
     #returns a numpy array for each variable, this will allow us to use the variables to test our algorithm
     data_train, data_test, targets_train, test_target = train_test_split(dataset.data, dataset.target, test_size = .3)
 
