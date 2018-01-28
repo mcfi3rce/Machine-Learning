@@ -19,9 +19,9 @@ class KNeighborsModel(object):
         return self.knn(self.k, self.data, self.targets, data_test)
 
     def knn(self, k, data, targets, data_test):
-        print "K: ", k
+        #print "K: ", k
         nInputs = np.shape(data_test)[0]
-        print "Inputs: ", nInputs
+        #print "Inputs: ", nInputs
         closest = np.zeros(nInputs)
 
         for n in range(nInputs):
@@ -30,15 +30,16 @@ class KNeighborsModel(object):
 
             #find nearest neighbor
             indices = np.argsort(distances,axis = 0)
-
-            classes = np.unique(targets[indices[:k]])
-
+            #print "Indices: ", indices
+            classes = np.unique(targets[indices[:k]]).astype(int)
+            #print "Classes: ", classes
             if len(classes)==1:
                 closest[n] = np.unique(classes)
             else:
                 counts = np.zeros(max(classes)+1)
                 for i in range(k):
-                    counts[targets[indices[i]]] += 1
+                    #print "Targets:", targets
+                    counts[targets[indices[i]].astype(int)] += 1
                     closest[n] = np.max(counts)
 
         return closest

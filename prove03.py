@@ -7,7 +7,12 @@ from sklearn import preprocessing
 import matplotlib as mp
 from sklearn.model_selection import KFold
 #from sklearn.neighbors import KNeighborsClassifier
-"""This code is meant to read non-numeric data from csv files and process it using the k-nearest neighbors algorithm"""
+
+"""------------------------------------------------------------------------------------------------
+* Prove 03: KNN with Non-Trivial Datasets
+* This code is meant to read non-numeric data from csv files and process it using the k-nearest
+* neighbors algorithm
+------------------------------------------------------------------------------------------------"""
 def main():
 
     # Get the data from the data sets
@@ -37,6 +42,11 @@ def main():
 
     print "Accuracy: {:.2f}".format(correctness)
 
+"""------------------------------------------------------------------------------------------------
+* get_dataset
+* The user interface to choose the data set you want to run. It takes in user input and gets the
+* return value from each of the datasets. This is returned to main.
+------------------------------------------------------------------------------------------------"""
 def get_dataset():
     print"Which dataset do you want you want to use:\n1: Car Dataset\n2: Diabetes Dataset\n3: Car MPG Dataset \n"
     input = raw_input()
@@ -51,6 +61,12 @@ def get_dataset():
 
     return train_data, test_data
 
+"""------------------------------------------------------------------------------------------------
+* build_cars
+* This function gets the cars dataset from the UCI repository and reads through the columns
+* The data is not numerical so it replaces the values with a numerical value. Then it creates 2 
+* numpy arrays and returns them.
+------------------------------------------------------------------------------------------------"""
 def build_cars():
     headers = ["buying", "maint", "doors", "persons", "lug_boot", "safety", "result"]
     dataset = read_csv('car.csv',header = None, names = headers)
@@ -69,6 +85,12 @@ def build_cars():
 
     return train_data, test_data
 
+"""------------------------------------------------------------------------------------------------
+* get_diabetes 
+* Reads in the pima indians dataset. There are empty values that are present so those need to be
+* handled. They are replaced with NaN and then these rows are dropped because it is difficult to
+* compare these to others who have all their values. 
+------------------------------------------------------------------------------------------------"""
 def get_diabetes():
     headers = ["preg", "gluc", "bP", "tricep_skin", "insulin", "bmi", "dpf", "age", "class"]
     dirty = read_csv('pima.csv', header = None, names = headers)
@@ -88,14 +110,19 @@ def get_diabetes():
 
     return train_data, test_data
 
+"""------------------------------------------------------------------------------------------------
+* get_mpg
+* Read in the mpg dataset from UCI Repo. Replace the '?' with na values and split the train and
+* test data
+------------------------------------------------------------------------------------------------"""
 def get_mpg():
     headers = ["mpg", "cylinders", "displacement", "horsepower", "weight", "acceleration", "model_year", "origin", "car_name"]
     dataset = read_csv('mpg.csv', header = None, delim_whitespace=True, names = headers, na_values='?')
-    dataset = dataset.sample(frac=1).reset_index(drop=True)
-    
+    dataset.dropna(inplace=True)
+
     train_data = dataset.as_matrix(headers[1:8])
     test_data = dataset.as_matrix(headers[0:1])
-
+    
     print train_data
-    return train_data, test_data
+    return train_data.astype(float), test_data
 main()
