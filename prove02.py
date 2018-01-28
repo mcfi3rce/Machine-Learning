@@ -24,6 +24,7 @@ def build_dataset(dataset = 0, k = 3):
     #returns a numpy array for each variable, this will allow us to use the variables to test our algorithm
     data_train, data_test, targets_train, test_target = train_test_split(dataset.data, dataset.target, test_size = .3)
 
+    print "Data: ", data_train
     #Select the kNearest Neighbors
     classifier = KNeighborsClassifier(int(k))
     model = classifier.fit(data_train, targets_train)
