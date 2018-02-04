@@ -11,7 +11,6 @@ def calculate_entropy(classes, target):
     no_bin = 0.0
     yes_bin = 0.0
     total_entropy = 0.0
-    print the_set, classes
 
     for x in the_set:
         for y in range(len(classes)):
@@ -29,6 +28,5 @@ def calculate_entropy(classes, target):
         total_entropy += weighted_entropy
         no_bin = yes_bin = 0.0
 
-    print total_entropy
     return total_entropy
 

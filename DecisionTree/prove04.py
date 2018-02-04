@@ -1,5 +1,5 @@
-from knn import KNeighborsClassifier
 from entropy import calculate_entropy
+from dtree import DTreeClassifier
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -7,7 +7,6 @@ from pandas import read_csv
 from sklearn import preprocessing
 import matplotlib as mp
 from sklearn.model_selection import KFold
-#from sklearn.neighbors import KNeighborsClassifier
 
 """------------------------------------------------------------------------------------------------
 * Prove 03: KNN with Non-Trivial Datasets
@@ -24,9 +23,9 @@ def main():
     # Split the data into the train data
     #X_train, X_test, Y_train, Y_test = train_test_split(train_data, test_data)
     
-    '''
+
     # Set Classifier
-    classifier = KNeighborsClassifier()
+    classifier = DTreeClassifier() 
     
     # KFold cross validation
     kf = KFold(n_splits=10)
@@ -36,8 +35,13 @@ def main():
         Y_train, Y_test = test_data[train_index], test_data[test_index]
 
     model = classifier.fit(X_train, Y_train)
+    print model.tree
 
-    targets_predicted = model.predict(X_test)
+    targets_predicted = model.predict(train_data, test_data)
+
+    for x in targets_predicted:
+        print x
+
     count = 0
     for index in range(len(X_test)):
         if targets_predicted[index] == Y_test[index]:
@@ -45,7 +49,7 @@ def main():
 
     correctness = float(count) / len(X_test) * 100
 
-    print "Accuracy: {:.2f}".format(correctness)'''
+    print "Accuracy: {:.2f}".format(correctness)
 
 """------------------------------------------------------------------------------------------------
 * get_dataset
@@ -78,9 +82,8 @@ def get_dataset():
 ------------------------------------------------------------------------------------------------"""
 def get_voting():
     headers = ["Class Name", "handicapped-infants", "water-project-cost-sharing", "adoption-of-the-budget-resolution", "physician-fee-freeze", "el-salvador-aid", "religious-groups-in-schools", "anti-satellite-test-ban", "aid-to-nicaraguan-contras", "mx-missile", "immigration", "synfuels-corporation-cutback", "education-spending", "superfund-right-to-sue", "crime", "duty-free-exports", "export-administration-act-south-africa"]
-    dataset = read_csv('votes.csv', delimiter = ',', header = None, names = headers)
+    dataset = read_csv('../DataSets/votes.csv', delimiter = ',', header = None, names = headers)
     
-    print dataset
     train_data = dataset.as_matrix(headers[1:-1])
     test_data = dataset.as_matrix(headers[0:1])
 
@@ -94,7 +97,7 @@ def get_voting():
 ------------------------------------------------------------------------------------------------"""
 def get_loan():
     headers = ["credit", "income", "collateral", "should_loan"]
-    dataset = read_csv('loan.csv', delimiter = ',', header = None, names = headers)
+    dataset = read_csv('../DataSets/loan.csv', delimiter = ',', header = None, names = headers)
 
     train_data = dataset.as_matrix(headers[0:3])
     test_data = dataset.as_matrix(headers[3:4])
@@ -109,7 +112,7 @@ def get_loan():
 ------------------------------------------------------------------------------------------------"""
 def build_cars():
     headers = ["buying", "maint", "doors", "persons", "lug_boot", "safety", "result"]
-    dataset = read_csv('car.csv',header = None, names = headers)
+    dataset = read_csv('../DataSets/car.csv',header = None, names = headers)
 
     cleanUp = {"buying" : {"low" : 0, "med" : 1, "high" : 2, "vhigh" : 3},
                "maint" : {"low" : 0, "med" : 1, "high" : 2, "vhigh" : 3},
@@ -133,7 +136,7 @@ def build_cars():
 ------------------------------------------------------------------------------------------------"""
 def get_diabetes():
     headers = ["preg", "gluc", "bP", "tricep_skin", "insulin", "bmi", "dpf", "age", "class"]
-    dirty = read_csv('pima.csv', header = None, names = headers)
+    dirty = read_csv('../DataSets/pima.csv', header = None, names = headers)
 
     # clean everything except the last column
     clean = dirty[headers[0:8]]
@@ -157,7 +160,7 @@ def get_diabetes():
 ------------------------------------------------------------------------------------------------"""
 def get_mpg():
     headers = ["mpg", "cylinders", "displacement", "horsepower", "weight", "acceleration", "model_year", "origin", "car_name"]
-    dataset = read_csv('mpg.csv', header = None, delim_whitespace=True, names = headers, na_values='?')
+    dataset = read_csv('../DataSets/mpg.csv', header = None, delim_whitespace=True, names = headers, na_values='?')
     dataset.dropna(inplace=True)
 
     train_data = dataset.as_matrix(headers[1:8])
