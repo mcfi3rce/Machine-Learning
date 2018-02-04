@@ -1,0 +1,40 @@
+When your assignment is complete, please answer the questions in this text file and upload it to I-Learn.
+
+1. Please provide the URL of your public GitHub repository.
+https://github.com/mcfi3rce/Machine-Learning
+
+2. What was the most difficult part of this assignment?
+The most difficult part was figuring out how to split the Dataframe into arrays and then use the KFolds to split the data. I also had missing spots in my data so that strings were hiding in the data.
+
+3. Briefly describe your process for handling non-numeric data.
+For handling non-numeric data I converted the words into values that would represent the descriptions. Such as low -> 0 medium -> 1 etc. I did this for each column because there weren't very many possible values that could be inside each column this made the most sense.
+
+4. Briefly describe your process for missing data.
+For missing data I initially tried to have the data be ignored by using a value that wasn't going to appear in the data, such as a -1. This however proved to be a problem and instead I opted to drop any rows with missing data. It lowers the accuracy of my algorithm but it does work. 
+
+5. Describe your results for the Car Evaluation dataset.
+The Car evaluation dataset I got an average of 70% as my accuracy. Meaning it can tell with 70% accuracy whether or not a car is a of good quality by comparing it to 3 of the nearest cars and see what their values are. 
+
+
+6. Describe your results for the Pima Indian dataset.
+I had a much harder time with this data set because of the missing values. My algorithm now only can get up to 30% accuracy and I imagine it is because it does the calculation across all data sets equally instead of weighting them.
+
+
+7. Describe your results for the Automobile MPG dataset.
+I was able to clean up the data. But KNN is doesn't do regression very well so my results are useless.
+
+8. Describe anything you did to go above and beyond the minimum standard requirements.
+In order to go above and beyond I tested my data with other forms of replacing empty values. I tried leaving the zeroes in, filling them with the average of the column, and dropping them. I found that by dropping the rows that have missing data my algorithm is more accurate. I also added some implementation so that you can run any of the datasets from the main menu.
+
+9. Please select the category you feel best describes your assignment:
+A - Some attempt was made
+B - Developing, but significantly deficient
+C - Slightly deficient, but still mostly adequate
+D - Meets requirements
+E - Shows creativity and excels above and beyond requirements
+
+E
+
+10. Provide a brief justification (1-2 sentences) for selecting that category.
+I would say that I showed creativity in the way that I handled things. I am a stickler for simplicity. I think it is more important that things be done in the simplest way possible and I strove to do that in my code. 
+

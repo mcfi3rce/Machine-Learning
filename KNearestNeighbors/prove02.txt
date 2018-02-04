@@ -1,0 +1,37 @@
+When your assignment is complete, please answer the questions in this text file and upload it to I-Learn.
+
+1. Please provide the URL of your public GitHub repository.
+https://github.com/mcfi3rce/Machine-Learning
+
+2. Briefly describe your overall approach to the task and highlight the most difficult part of this assignment.
+My overall approach was to take the algorithm from the book and try and apply it to my own code. I had a very difficult time understanding how the fit function in the KNNClass and the KNNClassifier interacted. I understood how the code calculated the nearest neighbors but I couldn't figure out how to set them up together. Also the book had some interesting variable names that I couldn't decipher for a while but luckily, after working together we figured it out. 
+
+
+3. Briefly describe your process for handling numeric data on different scales (i.e., normalizing).
+My code doesn't normalize the numeric data but this isn't required for this week.
+
+
+4. Describe your results for the Iris data set. (For example, what level of accuracy did you see for different values of K?
+I found that for lower k values, from 3 - 5, it is extremely accurate but once you do any more than that it starts to go down. 
+
+5. How did your implementation compare to existing implementations?
+It does very well compared to the existing implementation until the k value starts to increase. Then we run into problems. 
+
+6. Describe anything you did to go above and beyond the minimum standard requirements.
+I added the option of running another data set and made it so you can implement any number of k-values from the application.
+I added a user interface.
+
+7. Please select the category you feel best describes your assignment:
+A - Some attempt was made
+B - Developing, but significantly deficient
+C - Slightly deficient, but still mostly adequate
+D - Meets requirements
+E - Shows creativity and excels above and beyond requirements
+
+Answer: E
+
+8. Provide a brief justification (1-2 sentences) for selecting that category.
+
+I selected "Shows creativity and excels above and beyond requirements" because I was curious how experimenting with K between
+additional datasets would affect my algorithm. This allowed me to experiment expressing my creativity and personality in this
+assignment.
