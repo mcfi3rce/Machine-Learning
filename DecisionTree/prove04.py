@@ -1,4 +1,4 @@
-from entropy import calculate_entropy
+from entropy import build_tree
 from dtree import DTreeClassifier
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
@@ -18,15 +18,14 @@ def main():
     # Get the data from the data sets
     train_data, test_data, headers = get_dataset()
 
-    calculate_entropy(train_data[:,2], test_data)
-    #print calc_info_gain(train_data, test_data, 0)
+    build_tree(train_data, test_data, headers[0:-1])
     # Split the data into the train data
     #X_train, X_test, Y_train, Y_test = train_test_split(train_data, test_data)
-    
 
+    """
     # Set Classifier
-    classifier = DTreeClassifier() 
-    
+    classifier = DTreeClassifier()
+
     # KFold cross validation
     kf = KFold(n_splits=10)
     kf.get_n_splits(train_data, test_data)
@@ -50,7 +49,7 @@ def main():
     correctness = float(count) / len(X_test) * 100
 
     print "Accuracy: {:.2f}".format(correctness)
-
+    """
 """------------------------------------------------------------------------------------------------
 * get_dataset
 * The user interface to choose the data set you want to run. It takes in user input and gets the
@@ -99,8 +98,8 @@ def get_loan():
     headers = ["credit", "income", "collateral", "should_loan"]
     dataset = read_csv('../DataSets/loan.csv', delimiter = ',', header = None, names = headers)
 
-    train_data = dataset.as_matrix(headers[0:3])
-    test_data = dataset.as_matrix(headers[3:4])
+    train_data = dataset[headers[0:3]]
+    test_data = dataset[headers[3:4]]
 
     return train_data, test_data, headers
 
