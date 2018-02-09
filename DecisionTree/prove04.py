@@ -8,7 +8,7 @@ from pandas import read_csv
 from sklearn import preprocessing
 import matplotlib as mp
 from sklearn.model_selection import KFold
-
+import pandas as pd
 """------------------------------------------------------------------------------------------------
 * Prove 03: KNN with Non-Trivial Datasets
 * This code is meant to read non-numeric data from csv files and process it using the k-nearest
@@ -18,7 +18,8 @@ def main():
 
     # Get the data from the data sets
     train_data, test_data, headers = get_dataset()
-
+    frames = [train_data,test_data]
+    train_data = pd.concat(frames, axis=1)
     tree = build_tree(train_data, test_data, headers[0:-1])
     # Split the data into the train data
     #X_train, X_test, Y_train, Y_test = train_test_split(train_data, test_data)

@@ -18,7 +18,7 @@ def most_common(train_data):
 def build_tree(train_data, test_data, attributes, removed = []):
     # make an empty node
     cur_node = Node()
-
+    
     # remove any used attributes
     remaining = set(attributes) - set(removed)
 
@@ -28,8 +28,9 @@ def build_tree(train_data, test_data, attributes, removed = []):
         return cur_node
 
     # else if no more options
-    elif len(remaining) == 1:
+    elif len(remaining) == 0:
         options_set = train_data[remaining.pop()].unique()
+        print "OPTION: ", options_set
         if len(options_set) == 1:
             cur_node.appendChild(options_set, options_set)
             return cur_node
@@ -41,55 +42,53 @@ def build_tree(train_data, test_data, attributes, removed = []):
     else:
         # calculate the best value and set it to the node
         entropies = {}
-        print remaining
         for attribute in remaining:
-            entropies[attribute] = calculate_entropy(train_data[attribute], test_data["should_loan"])
+            entropies[attribute] = calculate_entropy(train_data, attribute)
 
         for k, v in entropies.iteritems():
             print k, v
-        
+
         # find the lowest value in our list of entropies
         best_val = min(entropies, key=entropies.get)
         cur_node.name = best_val
+
         # get all possible values of root
         poss_values = train_data[best_val].unique()
-        
+
         # build the tree
         child_nodes = {}
         for poss_value in poss_values:
             data_subset = train_data[train_data[best_val] == poss_value]
+            data_subset.reset_index(inplace=True, drop=True)
             # remove this attribute
             removed.append(best_val)
             node = build_tree(data_subset, test_data, attributes, removed)
             cur_node.children = child_nodes[poss_value] = node
+            print "REMOVED ALL ATTRIBUTES\n"
             removed = []
 
     return cur_node
 
-def calculate_entropy(classes, target): 
-    the_set = classes.unique()
+def calculate_entropy(train_data, attribute): 
+    the_set = train_data[attribute].unique()
     no_bin = 0.0
     yes_bin = 0.0
     total_entropy = 0.0
-
-    
-    for attribute in the_set:
-        # DON'T FORGET TO RESET THE ITERATOR
-        it = np.nditer(classes, flags=['f_index'])
-        while not it.finished:
-            class_type = it[0]
-            if attribute == class_type:
-                if target[it.index] == 0:
+    size = len(train_data)
+    for attr in the_set:
+        for x in range(0, size):
+            if attr == train_data[attribute][x]:
+                if train_data["should_loan"][x] == 0:
                     no_bin += 1
                 else:
                     yes_bin += 1
-            it.iternext()
+
         total = no_bin + yes_bin
         no_bin_entropy = entropy(no_bin/total)
         yes_bin_entropy = entropy(yes_bin/total)
         single_entropy = no_bin_entropy + yes_bin_entropy
-        weighted_entropy = single_entropy * (total / len(classes))
-        print weighted_entropy
+        weighted_entropy = single_entropy * (total / size)
+        #print weighted_entropy
         total_entropy += weighted_entropy
         no_bin = yes_bin = 0.0
     return total_entropy
