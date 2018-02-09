@@ -1,5 +1,6 @@
 from entropy import build_tree
 from entropy import calculate_entropy
+from entropy import print_tree
 from dtree import DTreeClassifier
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
@@ -20,7 +21,8 @@ def main():
     train_data, test_data, headers = get_dataset()
     frames = [train_data,test_data]
     train_data = pd.concat(frames, axis=1)
-    tree = build_tree(train_data, test_data, headers[0:-1])
+    tree = build_tree(train_data, headers[0:-1])
+    print_tree(tree)
     # Split the data into the train data
     #X_train, X_test, Y_train, Y_test = train_test_split(train_data, test_data)
 

@@ -4,13 +4,7 @@ class Node():
         self.children = children
 
     def isLeaf(self):
-        return self.name == self.children
+        return self.children == type(dict)
 
     def appendChild(self, attribute, value):
         self.children[attribute] = value
-
-    def __repr__(self):
-        if self.isLeaf():
-            print self.name
-        else:
-            print self.children

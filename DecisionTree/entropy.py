@@ -15,30 +15,42 @@ def most_common(train_data):
     most_common =max(count.iteritems(), key=operator.itemgetter(1))[0]
     return most_common
 
-def build_tree(train_data, test_data, attributes, removed = []):
+def print_tree(node):
+    print node.name
+
+    if not node.isLeaf():
+        for (key, value) in node.children.iteritems():
+            print key, "{"
+            print_tree(value)
+            print "}"
+
+
+
+def build_tree(train_data, attributes, removed = []):
     # make an empty node
     cur_node = Node()
     
     # remove any used attributes
     remaining = set(attributes) - set(removed)
 
+    # test for same targets
+    remaining_targets = train_data.iloc[:,-1].unique()
+
     # if no more rows SOMETHING IS WRONG
     if len(train_data) == 0:
         cur_node.name = "INVALID DATA"
         return cur_node
 
+    if len(remaining_targets) == 1:
+        print "LEAF: ", remaining_targets[0]
+        cur_node.name = remaining_targets[0]
+        return cur_node
     # else if no more options
     elif len(remaining) == 0:
-        options_set = train_data[remaining.pop()].unique()
-        print "OPTION: ", options_set
-        if len(options_set) == 1:
-            cur_node.appendChild(options_set, options_set)
-            return cur_node
-        else:
-            #count the number of each class and return the most common
-            leaf_val = Node(most_common(train_data))
-            cur_node.appendChild(leaf_val, leaf_val)
-            return cur_node
+        #count the number of each class and return the most common
+        leaf_val = Node(most_common(train_data.iloc[:,-1]))
+        cur_node.appendChild(leaf_val, leaf_val)
+        return cur_node
     else:
         # calculate the best value and set it to the node
         entropies = {}
@@ -62,9 +74,8 @@ def build_tree(train_data, test_data, attributes, removed = []):
             data_subset.reset_index(inplace=True, drop=True)
             # remove this attribute
             removed.append(best_val)
-            node = build_tree(data_subset, test_data, attributes, removed)
+            node = build_tree(data_subset, attributes, removed)
             cur_node.children = child_nodes[poss_value] = node
-            print "REMOVED ALL ATTRIBUTES\n"
             removed = []
 
     return cur_node
@@ -78,7 +89,7 @@ def calculate_entropy(train_data, attribute):
     for attr in the_set:
         for x in range(0, size):
             if attr == train_data[attribute][x]:
-                if train_data["should_loan"][x] == 0:
+                if train_data.iloc[:,-1][x] == 0:
                     no_bin += 1
                 else:
                     yes_bin += 1
