@@ -16,15 +16,12 @@ def most_common(train_data):
     return most_common
 
 def print_tree(node):
-    print node.name
-
+    print node.name,
     if not node.isLeaf():
         for (key, value) in node.children.iteritems():
-            print key, "{"
-            print_tree(value)
-            print "}"
-
-
+            print key, "{",
+            print_tree(value),
+            print "}",
 
 def build_tree(train_data, attributes, removed = []):
     # make an empty node
@@ -42,7 +39,7 @@ def build_tree(train_data, attributes, removed = []):
         return cur_node
 
     if len(remaining_targets) == 1:
-        print "LEAF: ", remaining_targets[0]
+        # print "LEAF: ", remaining_targets[0]
         cur_node.name = remaining_targets[0]
         return cur_node
     # else if no more options
@@ -56,9 +53,6 @@ def build_tree(train_data, attributes, removed = []):
         entropies = {}
         for attribute in remaining:
             entropies[attribute] = calculate_entropy(train_data, attribute)
-
-        for k, v in entropies.iteritems():
-            print k, v
 
         # find the lowest value in our list of entropies
         best_val = min(entropies, key=entropies.get)
@@ -75,7 +69,9 @@ def build_tree(train_data, attributes, removed = []):
             # remove this attribute
             removed.append(best_val)
             node = build_tree(data_subset, attributes, removed)
-            cur_node.children = child_nodes[poss_value] = node
+            # print "POS: ", poss_value
+            child_nodes[poss_value] = node
+            cur_node.children = child_nodes
             removed = []
 
     return cur_node

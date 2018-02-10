@@ -1,64 +1,36 @@
 import numpy as np
 import math
 from bTree import Node
+import entropy as enpy
+import pandas as pd
 
 class DTreeClassifier():
 
     def __init__(self):
         pass
 
-    def fit(self, data, targets):
-        return DecisionTreeModel(data, targets)
+    def fit(self, data, targets, headers):
+        return DecisionTreeModel(data, targets, headers)
 
 class DecisionTreeModel():
-    def __init__(self, data, targets):
+    def __init__(self, data, targets, headers):
         self.data= data
         self.targets = targets
-        self.tree = self.build_tree(data, targets)
+        self.headers = headers
+        frames = [data, targets]
+        train_data = pd.concat(frames, axis=1)
+        train_data.reset_index(inplace=True, drop=True)
+        self.tree = enpy.build_tree(train_data, headers[:-1])
 
     def __repr__(self):
-        print self.tree
+        enpy.print_tree(self.tree)
 
-    def predict(self, data, targets):
+    def predict(self, data):
         predictions = []
-        for item in data:
-            predictions.append(self.predict_one(item))
+        for index, row in data.iterrows():
+            print(row.to_frame().T)
+            predictions.append(self.predict_one(row))
         return predictions
 
     def predict_one(self, data):
-        return "WAT"
-  
-    def build_tree(self, data, targets):
-        data_set = np.unique(data)
-
-        if len(data_set) == 1:
-            return Node()
-        ##createNode for each characteristic
-        # Find the best attribute
-        ##for each characteristic find entropy value
-        # Calculate entropy
-        ##set the lowest entropy value as the head
-        # -SUM of PlogP
-        ##run the next node and see which of the remaining values has the next lowest entropy
-        #once a value has an entropy of zero go left
-        #continue until there is no more entropy
-        #return the treee
-        else:
-            return Node()
-
-'''
-    If all examples have the same label
-    return a leaf with that label
-    Else if there are no features left to test
-    return a leaf with the most common label
-    Else
-    Consider each available feature
-    Choose the one that maximizes information gain
-    Create a new node for that feature
-
-    For each possible value of the feature
-        Create a branch for this value
-        Create a subset of the examples for each branch
-        Recursively call the function to create a new node at that branch
-'''
-  
+        return 0

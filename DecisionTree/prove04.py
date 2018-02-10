@@ -9,7 +9,6 @@ from pandas import read_csv
 from sklearn import preprocessing
 import matplotlib as mp
 from sklearn.model_selection import KFold
-import pandas as pd
 """------------------------------------------------------------------------------------------------
 * Prove 03: KNN with Non-Trivial Datasets
 * This code is meant to read non-numeric data from csv files and process it using the k-nearest
@@ -19,41 +18,36 @@ def main():
 
     # Get the data from the data sets
     train_data, test_data, headers = get_dataset()
-    frames = [train_data,test_data]
-    train_data = pd.concat(frames, axis=1)
-    tree = build_tree(train_data, headers[0:-1])
-    print_tree(tree)
+    #tree = build_tree(train_data, headers[0:-1])
     # Split the data into the train data
-    #X_train, X_test, Y_train, Y_test = train_test_split(train_data, test_data)
+    X_train, Y_train, X_test, Y_test = train_test_split(train_data, test_data, test_size=.3)
 
-    """
     # Set Classifier
     classifier = DTreeClassifier()
 
+    """
     # KFold cross validation
     kf = KFold(n_splits=10)
     kf.get_n_splits(train_data, test_data)
     for train_index, test_index in kf.split(train_data, test_data):
         X_train, X_test = train_data[train_index], train_data[test_index]
         Y_train, Y_test = test_data[train_index], test_data[test_index]
+    """
+    model = classifier.fit(X_train, X_test, headers)
+    targets_predicted = model.predict(Y_train)
 
-    model = classifier.fit(X_train, Y_train)
-    print model.tree
-
-    targets_predicted = model.predict(train_data, test_data)
-
-    for x in targets_predicted:
-        print x
-
+    # reset the indexes
+    Y_test = Y_test[headers[-1]]
+    Y_test.reset_index(inplace=True, drop=True)
+    print Y_test
     count = 0
-    for index in range(len(X_test)):
+    for index in range(len(targets_predicted)):
         if targets_predicted[index] == Y_test[index]:
             count += 1
 
-    correctness = float(count) / len(X_test) * 100
+    correctness = float(count) / len(Y_test) * 100
 
     print "Accuracy: {:.2f}".format(correctness)
-    """
 """------------------------------------------------------------------------------------------------
 * get_dataset
 * The user interface to choose the data set you want to run. It takes in user input and gets the
