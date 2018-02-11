@@ -18,9 +18,15 @@ def main():
 
     # Get the data from the data sets
     train_data, test_data, headers = get_dataset()
-    #tree = build_tree(train_data, headers[0:-1])
+
     # Split the data into the train data
     X_train, Y_train, X_test, Y_test = train_test_split(train_data, test_data, test_size=.3)
+
+    # the quirks of panda dataframes
+    X_train.reset_index(inplace=True, drop=True)
+    Y_train.reset_index(inplace=True, drop=True)
+    X_test.reset_index(inplace=True, drop=True)
+    Y_test.reset_index(inplace=True, drop=True)
 
     # Set Classifier
     classifier = DTreeClassifier()
@@ -33,17 +39,17 @@ def main():
         X_train, X_test = train_data[train_index], train_data[test_index]
         Y_train, Y_test = test_data[train_index], test_data[test_index]
     """
+
     model = classifier.fit(X_train, X_test, headers)
     targets_predicted = model.predict(Y_train)
 
-    # reset the indexes
+    # get the column
     Y_test = Y_test[headers[-1]]
-    Y_test.reset_index(inplace=True, drop=True)
-    print Y_test
+
     count = 0
     for index in range(len(targets_predicted)):
         if targets_predicted[index] == Y_test[index]:
-            count += 1
+            count += 1 
 
     correctness = float(count) / len(Y_test) * 100
 
@@ -78,12 +84,18 @@ def get_dataset():
 * numpy arrays and returns them.
 ------------------------------------------------------------------------------------------------"""
 def get_voting():
-    headers = ["Class Name", "handicapped-infants", "water-project-cost-sharing", "adoption-of-the-budget-resolution", "physician-fee-freeze", "el-salvador-aid", "religious-groups-in-schools", "anti-satellite-test-ban", "aid-to-nicaraguan-contras", "mx-missile", "immigration", "synfuels-corporation-cutback", "education-spending", "superfund-right-to-sue", "crime", "duty-free-exports", "export-administration-act-south-africa"]
-    dataset = read_csv('../DataSets/votes.csv', delimiter = ',', header = None, names = headers)
-    
-    train_data = dataset.as_matrix(headers[1:-1])
-    test_data = dataset.as_matrix(headers[0:1])
-
+    headers = ["party", "handicapped-infants", "water-project-cost-sharing", "adoption-of-the-budget-resolution", "physician-fee-freeze", "el-salvador-aid", "religious-groups-in-schools", "anti-satellite-test-ban", "aid-to-nicaraguan-contras", "mx-missile", "immigration", "synfuels-corporation-cutback", "education-spending", "superfund-right-to-sue", "crime", "duty-free-exports", "export-administration-act-south-africa"]
+    dataset = read_csv('../DataSets/votes.csv', delimiter = ',', na_values = '?', header = None, names = headers)
+    dataset.dropna(inplace=True)
+    replace = {"n" : 0,
+               "y" : 1,
+               "democrat": 0,
+               "republican" : 1}
+    dataset.replace(replace, inplace=True)
+    train_data = dataset[headers[1:]]
+    test_data = dataset[headers[0:1]]
+    headers.remove("party")
+    headers.append("party")
     return train_data, test_data, headers
 
 """------------------------------------------------------------------------------------------------
