@@ -30,25 +30,21 @@ class DecisionTreeModel():
         for index, row in data.iterrows():
             attributes = self.headers[:]
             prediction = self.predict_class(self.tree, row, attributes)
-            print "PREDICT: ", prediction
             predictions.append(prediction)
         return predictions
 
     def predict_class(self, node, row_data, headers):
-        print "NODE: ", node.name
-        print "HEADERS: ", len(headers)
         for attribute in headers:
             if attribute == node.name:
                 value = row_data[attribute]
                 if value in node.children:
                     new_node = node.children[value]
                     if new_node.isLeaf():
-                        print "LEAF: ", new_node.name
                         return new_node.name
                     else:
-                        print "BRANCH: ", new_node.name
                         headers.remove(attribute)
-                        self.predict_class(new_node, row_data, headers)
+                        return self.predict_class(new_node, row_data, headers)
                 else:
-                    return 0
+                    most_common = enpy.most_common(self.targets)
+                    return most_common
         return 1

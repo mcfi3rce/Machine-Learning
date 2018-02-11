@@ -21,33 +21,33 @@ def main():
 
     # Split the data into the train data
     X_train, Y_train, X_test, Y_test = train_test_split(train_data, test_data, test_size=.3)
+ 
+    
+    # Set Classifier
+    classifier = DTreeClassifier()
 
+    # KFold cross validation
+    """
+    kf = KFold(n_splits=10)
+    kf.get_n_splits(train_data, test_data)
+    for train_index, test_index in kf.split(train_data, test_data):
+        X_train, X_test = train_data.iloc[train_index], train_data.iloc[test_index]
+        Y_train, Y_test = test_data.iloc[train_index], test_data.iloc[test_index]
+    """
     # the quirks of panda dataframes
     X_train.reset_index(inplace=True, drop=True)
     Y_train.reset_index(inplace=True, drop=True)
     X_test.reset_index(inplace=True, drop=True)
     Y_test.reset_index(inplace=True, drop=True)
-
-    # Set Classifier
-    classifier = DTreeClassifier()
-
-    """
-    # KFold cross validation
-    kf = KFold(n_splits=10)
-    kf.get_n_splits(train_data, test_data)
-    for train_index, test_index in kf.split(train_data, test_data):
-        X_train, X_test = train_data[train_index], train_data[test_index]
-        Y_train, Y_test = test_data[train_index], test_data[test_index]
-    """
-
+    # print X_train
     model = classifier.fit(X_train, X_test, headers)
     targets_predicted = model.predict(Y_train)
 
     # get the column
     Y_test = Y_test[headers[-1]]
-
+    
     count = 0
-    for index in range(len(targets_predicted)):
+    for index in range(len(Y_test)):
         if targets_predicted[index] == Y_test[index]:
             count += 1 
 
@@ -85,10 +85,10 @@ def get_dataset():
 ------------------------------------------------------------------------------------------------"""
 def get_voting():
     headers = ["party", "handicapped-infants", "water-project-cost-sharing", "adoption-of-the-budget-resolution", "physician-fee-freeze", "el-salvador-aid", "religious-groups-in-schools", "anti-satellite-test-ban", "aid-to-nicaraguan-contras", "mx-missile", "immigration", "synfuels-corporation-cutback", "education-spending", "superfund-right-to-sue", "crime", "duty-free-exports", "export-administration-act-south-africa"]
-    dataset = read_csv('../DataSets/votes.csv', delimiter = ',', na_values = '?', header = None, names = headers)
-    dataset.dropna(inplace=True)
+    dataset = read_csv('../DataSets/votes.csv', delimiter = ',', header = None, names = headers)
     replace = {"n" : 0,
                "y" : 1,
+               '?' : 2, 
                "democrat": 0,
                "republican" : 1}
     dataset.replace(replace, inplace=True)

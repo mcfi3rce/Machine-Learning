@@ -39,7 +39,6 @@ def build_tree(train_data, attributes, removed = []):
         return cur_node
 
     if len(remaining_targets) == 1:
-        # print "LEAF: ", remaining_targets[0]
         cur_node.name = remaining_targets[0]
         return cur_node
     # else if no more options
