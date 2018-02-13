@@ -3,6 +3,7 @@ from entropy import calculate_entropy
 from entropy import print_tree
 from dtree import DTreeClassifier
 from sklearn import datasets
+from sklearn import tree
 from sklearn.model_selection import train_test_split
 import numpy as np
 from pandas import read_csv
@@ -11,7 +12,9 @@ import matplotlib as mp
 from sklearn.model_selection import KFold
 """------------------------------------------------------------------------------------------------
 * Prove 03: KNN with Non-Trivial Datasets
-* This code is meant to read non-numeric data from csv files and process it using the k-nearest
+* Thi    print "PREDICTED: ", targets_predicted
+    print "VALUES: ", Y_test
+s code is meant to read non-numeric data from csv files and process it using the k-nearest
 * neighbors algorithm
 ------------------------------------------------------------------------------------------------"""
 def main():
@@ -54,6 +57,7 @@ def main():
     correctness = float(count) / len(Y_test) * 100
 
     print "Accuracy: {:.2f}".format(correctness)
+
 """------------------------------------------------------------------------------------------------
 * get_dataset
 * The user interface to choose the data set you want to run. It takes in user input and gets the
