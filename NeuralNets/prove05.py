@@ -1,6 +1,6 @@
-from nueron import NeuralNetworkClassifier
 import numpy as np
 import pandas as pd
+from neural_net import NeuralNetClassifier
 from scipy.stats import zscore
 from sklearn import datasets
 from sklearn.model_selection import KFold
@@ -10,19 +10,18 @@ def main():
     train_data, test_data, headers = get_dataset()
 
     # Set Classifier
-    classifier = NeuralNetworkClassifier()
+    classifier = NeuralNetClassifier()
 
     # KFold cross validation
     kf = KFold(n_splits=10)
     kf.get_n_splits(train_data, test_data)
     for train_index, test_index in kf.split(train_data, test_data):
-        X_train, X_test = train_data[train_index], train_data[test_index]
-        Y_train, Y_test = test_data[train_index], test_data[test_index]
+        X_train, X_test = train_data[train_index], test_data[test_index]
+        Y_train, Y_test = train_data[train_index], test_data[test_index]
 
     model = classifier.fit(X_train, X_test)
     targets_predicted = model.predict(Y_train)
 
-    print "Model: ", model
 
     count = 0
     for index in range(len(Y_test)):
@@ -87,12 +86,15 @@ def get_iris():
     headers = ["sepal length", "sepal width", "petal length", "petal width", "class"]
     iris = pd.read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data", header = None, names = headers)
 
+    # randomize the sample
+    iris = iris.sample(frac=1).reset_index(drop=True)
 
     train_data = iris[headers[0:-1]]
     train_data = train_data.apply(zscore)
     train_data = train_data.as_matrix()
 
     test_data = iris.as_matrix(headers[-1:])
+
 
     return train_data, test_data, headers
 

@@ -183,3 +183,47 @@ def get_mpg():
     return train_data.astype(float), test_data, headers
 
 main()
+
+physician-fee-freeze
+0 { education-spending
+    0 { 0 }
+    1 { 0 }
+    2 { adoption-of-the-budget-resolution
+        0 { 1 }
+        1 { 0 } } }
+1 { synfuels-corporation-cutback
+    0 { export-administration-act-south-africa
+        0 { 1 }
+        1 { superfund-right-to-sue
+            0 { 1 }
+            1 { 1 }
+            2 { handicapped-infants
+                0 { 0 }
+                1 { 1 } } }
+        2 { adoption-of-the-budget-resolution
+            0 { 1 }
+            1 { superfund-right-to-sue
+                1 { 0 }
+                2 { 1 } } } }
+    1 { adoption-of-the-budget-resolution
+        0 { superfund-right-to-sue
+            0 { immigration
+                0 { 0 }
+                1 { 1 } }
+            1 { water-project-cost-sharing
+                0 { export-administration-act-south-africa
+                    0 { 0 }
+                    1 { 1 }
+                    2 { 1 } }
+                1 { 1 } } }
+        1 { handicapped-infants
+            0 { 0 }
+            1 { 1 } }
+        2 { 0 } }
+    2 { 1 } }
+2 { education-spending
+    0 { 0 }
+    1 { 1 }
+    2 { mx-missile
+        1 { 0 }
+        2 { 1 } } }

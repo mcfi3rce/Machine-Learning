@@ -32,8 +32,7 @@ class Layer(object):
 
     def calculate_activation(self, row_data):
         # add in the bias node
-        print "ROW: ", row_data
-        row_data.append(-1)
+        row_data = np.append(-1, row_data)
 
         activation = []
         outputs = []
@@ -87,7 +86,6 @@ class Network(object):
             layer_input = layer_output
 
         prediction = layer_output.index(max(layer_output))
-
         return self.targets[prediction]
 
 
