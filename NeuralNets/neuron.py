@@ -6,6 +6,7 @@ class Node(object):
     def __init__ (self, num_next_nodes):
         self.num_next_nodes = num_next_nodes
         self.weights = []
+        self.error = 0
 
         for _ in range(0, num_next_nodes):
             self.weights.append(rn.uniform(-1,1))
@@ -16,9 +17,12 @@ class Node(object):
             outputs.append(weight * node_input)
         return outputs
 
-    def change_weight():
-        # to be continued
-        pass
+    def calculate_error(self,previous_output, node_output, expected_output):
+        self.error = (previous_output)*(expected_output - previous_output)*(previous_output - node_output)
+
+    def change_weight(self, old_weight, learning_rate, connecting_node, error_output_previous):
+        index = self.weights.index(old_weight)
+        self.weights[index] = old_weight - learning_rate * connecting_node * error_output_previous
 
 class Layer(object):
 
@@ -61,6 +65,7 @@ class Network(object):
     def __init__ (self, num_inputs, num_hidden_layers, num_hidden_nodes, targets):
         self.layers = []
         self.targets = targets
+        self.learning_rate = .1
         # add the input layer
         input_layer = Layer(num_inputs, num_hidden_nodes)
         self.layers.append(input_layer)
@@ -85,14 +90,7 @@ class Network(object):
             layer_output = layer.calculate_activation(layer_input)
             layer_input = layer_output
 
+        print "LAYER_OUTPUT: ", layer_output
         prediction = layer_output.index(max(layer_output))
+        print "PREDICTION: ", prediction
         return self.targets[prediction]
-
-
-
-
-        
-
-
-
-

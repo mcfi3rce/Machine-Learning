@@ -19,9 +19,10 @@ def main():
         X_train, X_test = train_data[train_index], test_data[test_index]
         Y_train, Y_test = train_data[train_index], test_data[test_index]
 
+    print "XTEST: ", X_test
     model = classifier.fit(X_train, X_test)
     targets_predicted = model.predict(Y_train)
-
+    
 
     count = 0
     for index in range(len(Y_test)):
