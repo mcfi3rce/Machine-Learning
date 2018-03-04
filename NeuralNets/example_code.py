@@ -1,5 +1,4 @@
 """
-Author: Sam McGrath
 Class: CS 450
 Instructor: Br. Burton
 """
