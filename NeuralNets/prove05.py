@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from neural_net import NeuralNetClassifier
+from example_code import NeuralNetwork
 from scipy.stats import zscore
 from sklearn import datasets
 from sklearn.model_selection import KFold
@@ -10,7 +10,7 @@ def main():
     train_data, test_data, headers = get_dataset()
 
     # Set Classifier
-    classifier = NeuralNetClassifier()
+    classifier = NeuralNetwork()
 
     # KFold cross validation
     kf = KFold(n_splits=10)
@@ -20,9 +20,8 @@ def main():
         Y_train, Y_test = train_data[train_index], test_data[test_index]
 
     print "XTEST: ", X_test
-    model = classifier.fit(X_train, X_test)
+    model = classifier.fit(X_train, X_test, headers)
     targets_predicted = model.predict(Y_train)
-    
 
     count = 0
     for index in range(len(Y_test)):
@@ -97,6 +96,6 @@ def get_iris():
     test_data = iris.as_matrix(headers[-1:])
 
 
-    return train_data, test_data, headers
+    return train_data, test_data, ["Iris-setosa", "Iris-versicolor", "Iris-virginica"]
 
 main()
