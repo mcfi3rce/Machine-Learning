@@ -1,0 +1,52 @@
+When your assignment is complete, please answer the questions in this text file and upload it to I-Learn.
+
+1. List the first dataset you tried, and then each of the algorithms along with the accuracy that each achieved. (If you played around with different parameters, you can simply report the best result for that algorithm).
+   +---------------+---------------+---------------+
+   | Dataset       | Learner       | Accuracy      |
+   +---------------+---------------+---------------+
+   |     Ecoli     |  KNeighbors   |     82.1%     |
+   |     Ecoli     |  GaussianNB   |     69.0%     |
+   |     Ecoli     |      MLP      |     83.3%     |
+   |     Ecoli     |    Bagging    |     81.0%     |
+   |     Ecoli     |   AdaBoost    |     73.8%     |
+   |     Ecoli     | RandomForest  |     89.3%     |
+   +---------------+---------------+---------------+
+
+
+2. List the second dataset you tried, and then each of the algorithms along with the accuracy that each achieved. (If you played around with different parameters, you can simply report the best result for that algorithm).
+   +---------------+---------------+---------------+
+   | Dataset       | Learner       | Accuracy      |
+   +---------------+---------------+---------------+
+   |  Cars Eval.   |  KNeighbors   |     91.1%     |
+   |  Cars Eval.   |  GaussianNB   |     66.4%     |
+   |  Cars Eval.   |      MLP      |     97.2%     |
+   |  Cars Eval.   |    Bagging    |     93.3%     |
+   |  Cars Eval.   |   AdaBoost    |     89.5%     |
+   |  Cars Eval.   | RandomForest  |     95.4%     |
+   +---------------+---------------+---------------+
+
+
+3. List the third dataset you tried, and then each of the algorithms along with the accuracy that each achieved. (If you played around with different parameters, you can simply report the best result for that algorithm).
+   +---------------+---------------+---------------+
+   | Dataset       | Learner       | Accuracy      |
+   +---------------+---------------+---------------+
+   | Pima Indians  |  KNeighbors   |     71.7%     |
+   | Pima Indians  |  GaussianNB   |     74.8%     |
+   | Pima Indians  |      MLP      |     76.0%     |
+   | Pima Indians  |    Bagging    |     71.3%     |
+   | Pima Indians  |   AdaBoost    |     72.8%     |
+   | Pima Indians  | RandomForest  |     78.0%     |
+   +---------------+---------------+---------------+
+
+
+4. Please describe anything else you learned or did for this assignment (i.e., above and beyond requirements)
+   I wanted to spend more time on my team project, so I did not do anything extra.
+
+
+5. Please select the category you feel best describes your assignment:
+   D - Meets requirements
+
+
+6. Provide a brief justification (1-2 sentences) for selecting that category.
+   I fulfilled all the requirements, and was unable to go above and beyond because I wanted to focus on the team project this week.
+   
